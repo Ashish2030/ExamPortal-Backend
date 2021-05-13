@@ -1,5 +1,6 @@
 package com.exam.exmaportal.modal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,19 +11,32 @@ import java.util.Set;
 @Table(name="users")
 public class User
 {
+    public User()
+    {
+
+    }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(unique = true)
     private String username;
     private String password;
     private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private boolean enable=true;
+    private String profile;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "user")
+    @JsonIgnore
+    private Set<User_Roles> userrole=new HashSet<>();
+
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long  id) {
         this.id = id;
     }
 
@@ -98,12 +112,6 @@ public class User
         this.userrole = userrole;
     }
 
-    private String lastName;
-    private String email;
-    private String phone;
-    private boolean enable=true;
-    private String profile;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "user")
-    private Set<User_Roles> userrole=new HashSet<>();
+
 
 }

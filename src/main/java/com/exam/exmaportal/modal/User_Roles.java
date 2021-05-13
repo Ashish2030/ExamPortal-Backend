@@ -8,8 +8,17 @@ import javax.persistence.*;
 @Entity
 public class User_Roles
 {
+    public User_Roles()
+    {
+
+    }
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userRoleId;
+    @ManyToOne(fetch=FetchType.EAGER)
+    private User user;
+    @ManyToOne
+    private Role role;
 
     public Long getUserRoleId() {
         return userRoleId;
@@ -35,8 +44,5 @@ public class User_Roles
         this.role = role;
     }
 
-    @ManyToOne
-    private User user;
-    @ManyToOne
-    private Role role;
+
 }

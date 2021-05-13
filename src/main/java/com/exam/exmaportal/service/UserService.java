@@ -8,6 +8,7 @@ import com.exam.exmaportal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Set;
 
@@ -21,7 +22,6 @@ public class UserService
 
     public User createUser(User user, Set<User_Roles>user_roles) throws Exception
     {
-
         User local=this.userrepository.findByUsername(user.getUsername());
 
         if(local!=null)
@@ -31,21 +31,24 @@ public class UserService
         }
         else
         {
-            for(User_Roles ur:user_roles)
-            {
+            for(User_Roles ur:user_roles) {
                 roleRepository.save(ur.getRole());
+
+                user.getUserrole().addAll(user_roles);
+
+                local = this.userrepository.save(user);
             }
-            System.out.println(user.getUserrole());
-            user.getUserrole().addAll(user_roles);
-
-            System.out.println(user+"lll");
-
-            local=this.userrepository.save(user);
-            System.out.println("Service");
 
         }
         return local;
-
+    }
+    public User getValue(String username)
+    {
+        return this.userrepository.findByUsername(username);
+    }
+    public void Delete(Long id)
+    {
+        this.userrepository.deleteById(id);
 
     }
 
