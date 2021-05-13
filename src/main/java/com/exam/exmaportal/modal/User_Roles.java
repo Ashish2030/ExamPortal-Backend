@@ -4,18 +4,37 @@ package com.exam.exmaportal.modal;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
-@Getter
-@Setter
-@Data
-@NoArgsConstructor
 public class User_Roles
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userRoleId;
+
+    public Long getUserRoleId() {
+        return userRoleId;
+    }
+
+    public void setUserRoleId(Long userRoleId) {
+        this.userRoleId = userRoleId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @ManyToOne
     private User user;
     @ManyToOne
